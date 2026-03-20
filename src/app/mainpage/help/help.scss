@@ -1,0 +1,37 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+main {
+  max-width: calc(1440px - 232px);
+  padding: 5%;
+
+  .heading {
+    margin-bottom: 32px;
+  }
+}
+
+h2 {
+  font-size: clamp(48px, 10vw, 60px);
+}
+
+h3 {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+p {
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+span {
+  font-size: 16px;
+  color: all.$blueLight;
+}
+
+.howToUse {
+  @include all.flexi($ai: start, $gap: 35px);
+}
+
+.blue {
+  color: all.$blueLight;
+}

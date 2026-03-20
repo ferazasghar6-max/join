@@ -1,0 +1,296 @@
+<main class="board-container">
+  <section id="board-header">
+    <div id="header">
+      <h2>Board</h2>
+      <a routerLink="/add-task" id="add-task-button-responsive">
+        <img class="add-default" src="assets/icons/add-board-blue.png" alt="Add Icon" />
+        <img class="add-hover" src="assets/icons/add-board-light-blue.png" alt="Add Icon" />
+      </a>
+    </div>
+
+    <div class="search-add-section">
+      <div id="input-wrapper">
+        <input id="input-search" type="text" placeholder="Find Task" (input)="onSearch($event)" />
+        <button>
+          <img src="assets/icons/search.png" alt="Search Icon" />
+        </button>
+      </div>
+      <button (click)="open()" id="add-task-button">
+        <span id="add-span">Add Task</span>
+        <img class="add-default" src="assets/icons/add-board-blue.png" alt="Add Icon" />
+        <img class="add-hover" src="assets/icons/add-board-light-blue.png" alt="Add Icon" />
+      </button>
+    </div>
+  </section>
+
+  <section id="board-content">
+    <div cdkDropListGroup class="board-columns">
+      <div class="board-column">
+        <div class="column-header">
+          <p>To do</p>
+          <button class="add-button" (click)="open()">
+            <img class="add-button-default" src="assets/icons/add-task-blue.png" alt="Add-Button" />
+            <img
+              class="add-button-hover"
+              src="assets/icons/add-task-light-blue.png"
+              alt="Add-Button"
+            />
+          </button>
+        </div>
+
+        <div
+          class="task-library"
+          id="ToDo"
+          cdkDropList
+          [cdkDropListData]="todoTasksFiltred()"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListOrientation]="orientation"
+          [cdkDropListDisabled]="dragDisabled"
+          cdkScrollable
+          >
+          @if (todoTasksFiltred().length > 0) {
+            @for (task of todoTasksFiltred(); track task.id) {
+              <app-board-card
+                [task]="task"
+                [activeDropdownId]="activeDropdownId()"
+                (openDetails)="openTaskDetails($event)"
+                (toggleMenu)="toggleMenu($event)"
+                (menuClosed)="closeMenu()"
+              ></app-board-card>
+            }
+          } @else {
+            <div class="no-tasks-placeholder">
+              <p>No tasks to do</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="board-column">
+        <div class="column-header">
+          <p>In progress</p>
+          <button class="add-button" (click)="open('In Progress')">
+            <img class="add-button-default" src="assets/icons/add-task-blue.png" alt="Add-Button" />
+            <img
+              class="add-button-hover"
+              src="assets/icons/add-task-light-blue.png"
+              alt="Add-Button"
+            />
+          </button>
+        </div>
+
+        <div
+          class="task-library"
+          id="In Progress"
+          cdkDropList
+          [cdkDropListData]="inProgressTasksFiltred()"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListOrientation]="orientation"
+          [cdkDropListDisabled]="dragDisabled"
+          cdkScrollable
+        >
+          @if (inProgressTasksFiltred().length > 0) {
+            @for (task of inProgressTasksFiltred(); track task.id) {
+               <app-board-card
+                [task]="task"
+                [activeDropdownId]="activeDropdownId()"
+                (openDetails)="openTaskDetails($event)"
+                (toggleMenu)="toggleMenu($event)"
+                (menuClosed)="closeMenu()"
+              ></app-board-card>
+            }
+          } @else {
+            <div class="no-tasks-placeholder">
+              <p>No tasks in progress</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="board-column">
+        <div class="column-header">
+          <p>Await feedback</p>
+          <button class="add-button" (click)="open('Awaiting Feedback')">
+            <img class="add-button-default" src="assets/icons/add-task-blue.png" alt="Add-Button" />
+            <img
+              class="add-button-hover"
+              src="assets/icons/add-task-light-blue.png"
+              alt="Add-Button"
+            />
+          </button>
+        </div>
+
+        <div
+          class="task-library"
+          id="Awaiting Feedback"
+          cdkDropList
+          [cdkDropListData]="awaitingFeedbackTasksFiltred()"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListOrientation]="orientation"
+          [cdkDropListDisabled]="dragDisabled"
+          cdkScrollable
+        >
+          @if (awaitingFeedbackTasksFiltred().length > 0) {
+            @for (task of awaitingFeedbackTasksFiltred(); track task.id) {
+               <app-board-card
+                [task]="task"
+                [activeDropdownId]="activeDropdownId()"
+                (openDetails)="openTaskDetails($event)"
+                (toggleMenu)="toggleMenu($event)"
+                (menuClosed)="closeMenu()"
+              ></app-board-card>
+            }
+          } @else {
+            <div class="no-tasks-placeholder">
+              <p>No tasks in feedback</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="board-column">
+        <div class="column-header">
+          <p>Done</p>
+        </div>
+        <div
+          class="task-library"
+          id="Done"
+          cdkDropList
+          [cdkDropListData]="doneTasksFiltred()"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListOrientation]="orientation"
+          [cdkDropListDisabled]="dragDisabled"
+          cdkScrollable
+        >
+          @if (doneTasksFiltred().length > 0) {
+            @for (task of doneTasksFiltred(); track task.id) {
+               <app-board-card
+                [task]="task"
+                [activeDropdownId]="activeDropdownId()"
+                (openDetails)="openTaskDetails($event)"
+                (toggleMenu)="toggleMenu($event)"
+                (menuClosed)="closeMenu()"
+              ></app-board-card>
+            }
+          } @else {
+            <div class="no-tasks-placeholder">
+              <p>No tasks done</p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dialog id="add-task-dialog" #dialog (click)="checkClickOutside($event)">
+    <button class="dialog-close-button" (click)="close()">
+      <img src="assets/icons/close-blue.png" alt="Close" />
+    </button>
+    <app-add-task (taskCreated)="close()" [initialStatus]="currentColumnStatus()"></app-add-task>
+  </dialog>
+
+  <dialog
+    #taskDetailDialog
+    id="taskDetailDialog"
+    (click)="checkClickOutside($event, 'taskDetailDialog')"
+  >
+    @if (taskService.selectedTask(); as task) {
+      @if(isTaskEditMode() === true){
+        <div id="taskDetailDialogEdit" (click)="$event.stopPropagation()">
+          <button class="dialog-close-button" (click)="closeTaskDetails()">
+            <img src="assets/icons/close-blue.png" alt="Close" />
+          </button>
+          <app-add-task [editTaskData]="taskService.selectedTask()" (taskCreated)="closeTaskDetails()">></app-add-task>
+        </div>
+      } @else{
+      <div id="stopPropagation" (click)="$event.stopPropagation()">
+        <div class="task-detail-header">
+          <span
+            [class]="
+              task.category === 'Technical Task' ? 'category technical' : 'category user-story'
+            "
+            >{{ task.category }}</span
+          >
+          <button class="dialog-close-button" (click)="closeTaskDetails()">
+            <img src="assets/icons/close-blue.png" alt="Close" />
+          </button>
+        </div>
+
+        <div class="title-description">
+            <h2>{{ task.title }}</h2>
+            <p>{{ task.description }}</p>
+        </div>
+
+        <div class="date-priority">
+            <p>Due date:</p>
+            <span>{{ task.due_date }}</span>
+          <p>Priority:</p>
+          <div>
+            <span>{{ task.priority }}</span>
+            @switch (task.priority) {
+              @case ('Urgent') {
+                <img src="assets/icons/urgent-red.png" alt="Priority Up" />
+              }
+              @case ('Medium') {
+                <img src="assets/icons/medium-orange.png" alt="Priority Up" />
+              }
+              @case ('Low') {
+                <img src="assets/icons/low-green.png" alt="Priority Up" />
+              }
+            }
+          </div>
+        </div>
+
+        <div>
+          <p class="subtitle">Assigned To:</p>
+          <div class="scroll-div">
+            @for (assignment of task.task_assignments; track assignment.contacts.id) {
+              <div class="assigned-to-user">
+                <span [style.background-color]="assignment.contacts.color">
+                  {{ contactService.getInitials(assignment.contacts.name) }}
+                </span>
+                <p>{{ assignment.contacts.name }}</p>
+              </div>
+            }
+          </div>
+        </div>
+        <div id="margin">
+          <p class="subtitle">Subtasks:</p>
+          <div class="scroll-div scroll-div--subtask">
+            @for (subtask of task.subtasks; track subtask.id) {
+              <button class="subtasks" (click)="taskService.toggleSubtaskStatus(subtask)">
+                <img
+                  [src]="
+                    subtask.is_done
+                      ? 'assets/icons/cheackbox-checked.png'
+                      : 'assets/icons/cheackbox.png'
+                  "
+                  alt="status"
+                />
+                <span>{{ subtask.title }}</span>
+              </button>
+            }
+          </div>
+        </div>
+        <div id="task-buttons">
+          <div>
+            <button class="buttons" (click)="deleteTask(task.id)">
+              <img class="default" src="assets/icons/delete.png" alt="Delete" />
+              <img class="hover" src="assets/icons/delete-light-blue.png" alt="Delete" />
+              Delete
+            </button>
+          </div>
+          <span class="seperator"></span>
+          <div>
+            <button class="buttons" (click)="isTaskEditMode.set(true)">
+              <img class="default" src="assets/icons/edit.png" alt="Edit" />
+              <img class="hover" src="assets/icons/edit-light-blue.png" alt="Edit" />
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+      }
+    }
+  </dialog>
+</main>

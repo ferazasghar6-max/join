@@ -1,0 +1,217 @@
+<main>
+  <div id="background-animation"></div>
+  <img id="logo" src="assets/icons/logo-big.png" alt="logo" />
+  <header>
+    @if (activeState() === 'log-in') {
+      <div id="sign-up-area">
+        <p>Not a Join User?</p>
+        <button class="button" (click)="setFormular('sign-up')">Sign Up</button>
+      </div>
+    }
+  </header>
+
+  <section id="main-content">
+    <section id="sign-up-wrapper">
+      <div id="sign-up-header">
+        @if (activeState() === 'sign-up') {
+          <button (click)="setFormular('log-in')">
+            <img src="assets/icons/arrow.png" alt="arrow-left" />
+          </button>
+        }
+        <div id="sign-up-headline">
+          <h2>
+            @if (activeState() === 'log-in') {
+              Log in
+            } @else {
+              Sign up
+            }
+          </h2>
+          <img src="assets/icons/blue-underline.png" alt="underline" />
+        </div>
+      </div>
+
+      <div id="form">
+        <form [formGroup]="userForm" (ngSubmit)="formSubmit()" id="sign-up-form">
+          @if (activeState() === 'sign-up') {
+            <div class="input-wrapper">
+              <div class="input-cover">
+                <img class="icon icon--lock" src="assets/icons/person.png" alt="User" />
+                <input id="name" type="text" formControlName="name" placeholder="Name" />
+              </div>
+              <span class="error-message">
+                @if (
+                  userForm.get('name')?.invalid &&
+                  userForm.get('name')?.touched &&
+                  activeState() === 'sign-up'
+                ) {
+                  Your Name is required.
+                }
+              </span>
+            </div>
+          }
+          <div class="input-wrapper">
+            <div class="input-cover">
+              <img class="icon" src="assets/icons/mail.png" alt="User" />
+              <input id="email" type="text" formControlName="email" placeholder="Email" />
+            </div>
+            <span class="error-message">
+              @if (userForm.get('email')?.hasError('required') && userForm.get('email')?.touched) {
+                Your email is required.
+              } @else if (userForm.get('email')?.hasError('pattern')) {
+                Please enter a valid email address.
+              } @else if (
+                userForm.get('password')?.hasError('supabase') ||
+                userForm.get('email')?.hasError('supabase')
+              ) {}
+            </span>
+          </div>
+
+          <div class="input-wrapper">
+            <div class="input-cover">
+              @if (!password.matches(':focus')) {
+                <img class="icon icon--lock" src="assets/icons/lock.png" alt="User" />
+              } @else if (!isPasswordVisible) {
+                <img
+                  class="icon clickable"
+                  src="assets/icons/visibility.png"
+                  (mousedown)="togglePassword($event, 'password')"
+                />
+              } @else {
+                <img
+                  class="icon clickable"
+                  src="assets/icons/visible.png"
+                  (mousedown)="togglePassword($event, 'password')"
+                />
+              }
+              <input
+                #password
+                id="password"
+                type="password"
+                formControlName="password"
+                placeholder="Password"
+                [type]="isPasswordVisible ? 'text' : 'password'"
+                (blur)="isPasswordVisible = false"
+              />
+            </div>
+            <span class="error-message">
+              @if (
+                userForm.get('password')?.hasError('required') && userForm.get('password')?.touched
+              ) {
+                Your password is required.
+              } @else if (
+                userForm.get('password')?.hasError('minlength') &&
+                userForm.get('password')?.touched &&
+                activeState() === 'sign-up'
+              ) {
+                Password must be at least 8 characters.
+              } @else if (
+                userForm.get('password')?.hasError('supabase') ||
+                userForm.get('email')?.hasError('supabase')
+              ) {
+                Check your email and password.
+              }
+            </span>
+          </div>
+
+          @if (activeState() === 'sign-up') {
+            <div class="input-wrapper">
+              <div class="input-cover">
+                @if (!confirm.matches(':focus')) {
+                  <img class="icon icon--lock" src="assets/icons/lock.png" alt="User" />
+                } @else if (!isConfirmVisible) {
+                  <img
+                    class="icon clickable"
+                    src="assets/icons/visibility.png"
+                    (mousedown)="togglePassword($event, 'confirm')"
+                  />
+                } @else {
+                  <img
+                    class="icon clickable"
+                    src="assets/icons/visible.png"
+                    (mousedown)="togglePassword($event, 'confirm')"
+                  />
+                }
+
+                <input
+                  #confirm
+                  id="confirm"
+                  [type]="isConfirmVisible ? 'text' : 'password'"
+                  formControlName="confirm"
+                  placeholder="Confirm Password"
+                  (blur)="isConfirmVisible = false"
+                />
+              </div>
+              <span class="error-message">
+                @if (
+                  userForm.get('confirm')?.invalid &&
+                  userForm.get('confirm')?.touched &&
+                  activeState() === 'sign-up'
+                ) {
+                  Your passwords don't match.
+                }
+              </span>
+            </div>
+          }
+          <div id="checkbox-content">
+            <div id="checkbox-wrapper">
+              <div class="custom-checkbox" (click)="toggleCheckBox()">
+                @if (userForm.get('checkBox')?.value) {
+                  <img src="assets/icons/checkbox-checked.png" alt="checked" />
+                } @else {
+                  <img src="assets/icons/cheackbox.png" alt="unchecked" />
+                }
+              </div>
+              <p>
+                @if (activeState() === 'sign-up') {
+                  I accept the <a routerLink="privacy-policy">Privacy policy</a>
+                } @else {
+                  Remember me
+                }
+              </p>
+            </div>
+            @if (activeState() === 'sign-up') {
+              <span class="error-message">
+                @if (userForm.get('checkBox')?.invalid && userForm.get('checkBox')?.touched) {
+                  Please accept privacy policy.
+                }
+              </span>
+            }
+          </div>
+        </form>
+      </div>
+
+      <div id="sign-up-footer">
+        <div (click)="handleDisabledClick()">
+          @if (activeState() === 'sign-up') {
+            <button
+              type="submit"
+              [disabled]="!userForm.valid"
+              class="button button-sign-up"
+              form="sign-up-form"
+            >
+              Sign Up
+            </button>
+          } @else {
+            <div id="log-in-buttons">
+              <button class="button" form="sign-up-form">Log in</button>
+              <button class="button-light" (click)="loging('guest')">Guest Log in</button>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <footer>
+    @if (activeState() === 'log-in') {
+      <div id="sign-up-area-responsive">
+        <p>Not a Join User?</p>
+        <button class="button button--responsive" (click)="setFormular('sign-up')">Sign Up</button>
+      </div>
+    }
+    <div id="legal-links">
+      <a routerLink="privacy-policy">Privacy Policy</a>
+      <a routerLink="legal-notice">Legal notice</a>
+    </div>
+  </footer>
+</main>

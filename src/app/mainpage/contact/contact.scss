@@ -1,0 +1,221 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+@use './dialog.scss';
+@use './main-contact-info.scss';
+
+.contact-site {
+  width: 100%;
+  @include all.flexi($jc: flex-start, $fd: row, $ai: flex-start, $gap: unset);
+  flex-wrap: nowrap;
+  align-content: flex-start;
+  max-width: calc(1440px - 232px);
+  @include all.notebook {
+    &.mobile-details-open {
+      .main-contacts-list {
+        display: none;
+      }
+      .main-contact-info {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 0 20px;
+        .contact-description {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.main-contacts-list {
+  width: 38%;
+  min-width: 356px;
+  height: calc(100vh - 96px);
+  filter: drop-shadow(4px 1px 4px rgba(110, 110, 110, 0.2));
+  @include all.notebook {
+    height: calc(100% - 96px - 80px);
+    width: 100%;
+    min-width: unset;
+  }
+  padding: 0px 0px 0px 20px;
+  background-color: white;
+  @include all.flexi($fd: column);
+
+  .list {
+    padding-right: 20px;
+    padding-left: 20px;
+    width: 95%;
+    @include all.notebook {
+      width: 100%;
+    }
+    height: 100%;
+    overflow-y: auto;
+    margin-top: 20px;
+
+    .letter {
+      width: 100%;
+      height: 58px;
+      padding-left: 20px;
+      font-size: 20px;
+      font-weight: 400;
+      @include all.flexi($jc: center, $fd: column, $ai: flex-start, $gap: unset);
+      align-content: flex-start;
+    }
+
+    .line-contacts {
+      width: 95%;
+      border: 1px;
+      background-color: all.$greyMid;
+      height: 1px;
+    }
+
+    .simple-info {
+      height: 58px;
+      width: 96%;
+      padding-left: 16px;
+      font-size: 20px;
+      @include all.flexi($jc: flex-start, $fd: row, $ai: center, $gap: 24px);
+      flex-wrap: nowrap;
+      align-content: center;
+      margin: 8px 0px;
+      border-radius: 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: all.$greyMid;
+      }
+      @include all.mobile {
+        padding-left: 0;
+      }
+
+      span {
+        font-size: 1.6rem;
+      }
+    }
+
+    .text-cut-email {
+      @include all.text-cut;
+      color: all.$blueLight;
+    }
+
+    .active {
+      background-color: all.$blue;
+      color: all.$grey;
+    }
+
+    .email {
+      color: all.$blueLight;
+    }
+
+    .simple-info span.roundContact {
+      font-size: 1.2rem;
+    }
+
+    .roundContact {
+      border-radius: 50%;
+      height: 75%;
+      aspect-ratio: 1;
+      text-align: center;
+      @include all.flexi($jc: center, $fd: row, $ai: center, $gap: unset);
+      align-content: center;
+      color: white;
+      border: medium solid white;
+    }
+  }
+
+  .btn-cover {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 20px 12px white;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+
+    .add-contact-btn {
+      background-repeat: no-repeat;
+      background-position: 90%;
+      background-color: all.$blue;
+      color: white;
+      border-radius: 10px;
+      border: 1px;
+      width: 96%;
+      height: 56px;
+      cursor: pointer;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      @include all.flexi();
+
+      > img {
+        margin-left: 12px;
+      }
+      &:hover {
+        background-color: all.$blueLight;
+      }
+      @include all.notebook {
+        display: none;
+      }
+    }
+  }
+
+  .add-contact-btn-mobile {
+    position: sticky;
+    bottom: 8px;
+    align-self: flex-end;
+    margin-right: 16px;
+    height: 56px;
+    width: 56px;
+    border-radius: 50%;
+    background-color: transparent;
+    background-image: url('../../../../public/assets/icons/add-contact-blue.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    @include all.desktop {
+      display: none;
+    }
+    &:hover {
+      background-image: url('../../../../public/assets/icons/add-contact-light-blue.png');
+    }
+  }
+}
+
+.roundContact-large {
+  height: 100px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 47px;
+  @include all.flexi($jc: center, $fd: row, $ai: center, $gap: unset);
+  flex-wrap: nowrap;
+  align-content: center;
+  color: white;
+  border: medium solid white;
+}
+
+.mobile-back-btn {
+  display: none;
+  @include all.notebook {
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    background-image: url('../../../../public/assets/icons/arrow.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
+
+.text-cut {
+  @include all.text-cut;
+}
+
+.text-cut-wrap {
+  @include all.text-cut-wrap;
+}

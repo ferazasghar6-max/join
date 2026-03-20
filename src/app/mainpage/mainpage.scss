@@ -1,0 +1,310 @@
+@use '../../../public/assets/styles/all-styles.scss' as all;
+
+main {
+  width: 100%;
+  height: 100dvh;
+  padding: 20px 5% 0px;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (max-height: 840px) {
+    height: fit-content;
+    overflow-y: auto;
+
+    #logo {
+      width: 60px;
+      @include all.mobile {
+        width: 25px;
+      }
+    }
+  }
+}
+
+#background-animation {
+  animation: backgroundAnimation 2s forwards;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#logo {
+  position: absolute;
+  left: 10%;
+  top: 6%;
+  z-index: 10;
+  width: 100px;
+  height: auto;
+  animation: midToLeft 2s ease-in-out forwards;
+
+  @include all.tablet {
+    left: 4%;
+    top: 3%;
+    width: 80px;
+    height: auto;
+  }
+}
+
+.button {
+  background-color: all.$blue;
+  font-size: 2rem;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &-sign-up {
+    width: 180px;
+  }
+
+  &:hover {
+    background-color: all.$blueLight;
+    box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.4);
+  }
+  &:disabled {
+    pointer-events: none;
+    background-color: all.$greyMid;
+    box-shadow: none;
+  }
+
+  @include all.tablet {
+    width: 180px;
+    text-align: center;
+  }
+
+  &--responsive {
+    padding: 8px 20px;
+
+    @include all.tablet {
+      width: 100px;
+      padding: 12px 16px;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.button-light {
+  background-color: white;
+  font-size: 2rem;
+  color: all.$blue;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid all.$blue;
+
+  &:hover {
+    color: all.$blueLight;
+    border: 2px solid all.$blueLight;
+    box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.4);
+  }
+
+  @include all.tablet {
+    width: 180px;
+    text-align: center;
+  }
+}
+
+header {
+  @include all.flexi($ai: start, $jc: flex-end);
+  height: 100px;
+  @include all.mobile {
+    height: 34px;
+  }
+  #sign-up-area {
+    @include all.flexi($jc: flex-end, $gap: 16px);
+    margin-top: 32px;
+
+    @include all.tablet {
+      display: none;
+    }
+  }
+}
+
+#main-content {
+  @include all.flexi();
+  height: 75%;
+}
+
+#sign-up-wrapper {
+  background-color: white;
+  height: fit-content;
+  padding-inline: clamp(10px, 5%, 30px);
+  padding-block: clamp(30px, 5%, 50px);
+  width: clamp(300px, 95%, 615px);
+  min-width: 300px;
+  border-radius: 30px;
+  overflow: hidden;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.1));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#sign-up-header {
+  width: 100%;
+  margin-bottom: 24px;
+  @include all.flexi();
+  button {
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: all.$grey;
+    }
+  }
+
+  #sign-up-headline {
+    @include all.flexi($fd: column, $gap: 8px);
+    h2 {
+      font-size: clamp(4rem, 5vw, 6rem);
+    }
+
+    img {
+      width: 130px;
+      height: 3.5px;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    position: absolute;
+    top: 35%;
+    left: 5%;
+  }
+}
+
+#form {
+  #sign-up-form {
+    height: 100%;
+    width: 100%;
+    @include all.flexi($fd: column, $jc: space-evenly);
+  }
+
+  .input-wrapper {
+    width: 85%;
+    margin-bottom: 15px;
+    @include all.flexi($fd: column, $ai: center);
+
+    .input-cover {
+      width: 100%;
+      position: relative;
+    }
+
+    .icon {
+      position: absolute;
+      right: 1%;
+      top: 50%; 
+      transform: translate(-50%, -50%);
+      z-index: 1;
+
+      &--lock {
+        right: 2%;
+      }
+    }
+
+    input {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid rgb(232, 232, 232);
+      padding: 10px clamp(40px, 15%, 50px) 10px 15px;
+      cursor: pointer;
+
+      &::placeholder {
+        font-size: clamp(1.6rem, 2vw, 2rem);
+        color: rgb(209, 209, 209);
+      }
+
+      &:focus {
+        outline: none;
+        border: 2px solid all.$blueLight;
+      }
+      &.ng-invalid.ng-touched {
+        border: 2px solid red;
+      }
+    }
+  }
+  .error-message {
+    font-size: 1.4rem;
+    color: red;
+    height: 14px;
+    width: 100%;
+  }
+
+  #checkbox-content {
+    margin-top: 8px;
+    @include all.flexi($fd: column);
+
+    #checkbox-wrapper {
+      @include all.flexi($gap: 8px);
+
+      .custom-checkbox {
+        padding: 1px;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: all.$grey;
+        }
+      }
+
+      p {
+        color: grey;
+        font-size: clamp(1.6rem, 2vw, 2rem);
+      }
+
+      a {
+        font-size: clamp(1.6rem, 2vw, 2rem);
+        color: all.$blueLight;
+      }
+    }
+  }
+}
+
+#sign-up-footer {
+  margin-top: 4px;
+  @include all.flexi();
+}
+
+#log-in-buttons {
+  @include all.flexi($gap: 35px);
+  margin: 20px 0;
+
+  @include all.tablet {
+    @include all.flexi($fd: column, $gap: 15px);
+  }
+}
+
+footer {
+  @include all.flexi($gap: 20px, $fd: column);
+  margin-top: 16px;
+
+  #sign-up-area-responsive {
+    @include all.flexi($gap: clamp(8px, 5vw, 40px));
+    display: none;
+    p {
+      font-size: clamp(1.6rem, 2vw, 2rem);
+    }
+
+    @include all.tablet {
+      display: flex;
+    }
+  }
+
+  #legal-links {
+    @include all.flexi($gap: 40px);
+    padding-bottom: 20px;
+    a {
+      color: rgb(189, 189, 189);
+      cursor: pointer;
+      &:hover {
+        color: all.$blueLight;
+        filter: drop-shadow(0.3px 0 0 currentcolor) drop-shadow(-0.3px 0 0 currentcolor)
+          drop-shadow(0 0.3px 0 currentcolor);
+      }
+    }
+  }
+}

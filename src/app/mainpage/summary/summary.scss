@@ -1,0 +1,262 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+main {
+  width: 100%;
+  height: 100%;
+  max-width: calc(1440px - 232px);
+
+  #wrapper {
+    width: 100%;
+    height: 100%;
+    padding-left: clamp(6%, 5vw, 12%);
+    padding-right: clamp(6%, 5vw, 12%);
+    @include all.flexi($jc: flex-start, $ai: center, $gap: 10%);
+
+    #content {
+      width: 75%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+  }
+}
+
+#mobile-animation{
+  animation: backgroundAnimation 3.5s forwards;
+  position: fixed;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+
+  >div{
+    width: 100%;
+    height: 100dvh;
+    @include all.flexi($fd:column);
+
+    p{
+      font-size: 3.5rem;
+    }
+    h2{
+      color: all.$blueLight;
+    }
+  }
+}
+
+#headline {
+  width: 100%;
+  @include all.flexi($jc: space-between);
+  padding: 30px 0px;
+
+  > h3 {
+    font-size: 5rem;
+    font-weight: bold;
+  }
+
+  > p {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+  }
+
+  > span {
+    width: 3px;
+    height: 60px;
+    background-color: all.$blueLight;
+  }
+
+  img {
+    display: none;
+    margin-top: 8px;
+  }
+}
+
+#greet {
+  width: 25%;
+  height: 100%;
+  @include all.flexi($jc: center, $ai: flex-start, $fd: column);
+  text-align: start;
+  padding-top: 48px;
+
+  > h4 {
+    font-size: clamp(2.5rem, 3vw, 4.5rem);
+    font-weight: 400;
+  }
+
+  > h2 {
+    font-size: clamp(2.5rem, 5vw, 6.4rem);
+    color: all.$blueLight;
+  }
+}
+
+.card {
+  @include all.flexi($jc: space-between, $gap: 8px);
+}
+
+.information {
+  text-align: center;
+}
+
+.button {
+  display: inline-block;
+  width: 245px;
+  height: 168px;
+  background-color: white;
+  border-radius: 30px;
+  @include all.flexi($gap: 18px);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+
+  .icon-hover {
+    display: none;
+  }
+
+  &:hover {
+    background-color: all.$blue;
+    color: white;
+
+    .icon-default {
+      display: none;
+    }
+
+    .icon-hover {
+      display: flex;
+    }
+  }
+}
+
+.button-two {
+  display: inline-block;
+  width: 100%;
+  height: 168px;
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  margin-top: 24px;
+  @include all.flexi();
+
+  p {
+    margin-top: 8px;
+  }
+
+  #urgent-header {
+    @include all.flexi($gap: 16px);
+  }
+
+  #seperator {
+    width: 2px;
+    height: 100px;
+    margin-left: clamp(30px, 3vw, 60px);
+    margin-right: clamp(30px, 3vw, 60px);
+    background-color: #d1d1d1;
+  }
+
+  &:hover {
+    background-color: all.$blue;
+    color: white;
+  }
+}
+
+.button-three {
+  display: inline-block;
+  width: 172px;
+  height: 168px;
+  background-color: white;
+  border-radius: 30px;
+  @include all.flexi();
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  margin-top: 24px;
+
+  &:hover {
+    background-color: all.$blue;
+    color: white;
+  }
+}
+
+span {
+  font-size: 6.5rem;
+  font-weight: bold;
+}
+
+//#region Mediaquerries
+
+@media (max-width: 1200px) {
+  main {
+    #greet {
+      display: none;
+    }
+
+    #mobile-animation{
+      visibility: visible;
+    }
+
+    #wrapper {
+      @include all.flexi($jc: center, $ai: center);
+      padding-left: clamp(10%, 10vw, 25%);
+      padding-right: clamp(10%, 10vw, 25%);
+      #content {
+        width: clamp(300px, 100%, 560px);
+      }
+    }
+  }
+}
+
+@include all.tablet {
+  #headline {
+    @include all.flexi($ai: flex-start);
+    flex-direction: column;
+    span {
+      display: none;
+    }
+    img {
+      display: block;
+    }
+  }
+
+  .button-two{
+    height: 140px;
+  }
+
+}
+
+@include all.mobile {
+  #headline {
+    h3 {
+      font-size: clamp(3rem, 10vw, 5rem);
+    }
+  }
+
+  .button,
+  .button-two {
+    height: fit-content;
+    padding: 12px;
+  }
+
+  .button-three {
+    width: 29dvw;
+    height: 29dvw;
+  }
+
+  span {
+    font-size: 5rem;
+  }
+
+  p {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 450px) {
+  span {
+    font-size: 3.5rem;
+  }
+
+  .urgent,
+  .icon-default,
+  .icon-hover {
+    width: 50px;
+    height: 50px;
+  }
+
+  .urgent {
+    margin-left: 12px;
+  }
+}
+//#endregion

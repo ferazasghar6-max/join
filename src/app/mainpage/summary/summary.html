@@ -1,0 +1,92 @@
+<main>
+   @if(oAuthService.showGreetingsAnimationMobile() === true){
+  <div id="mobile-animation">
+    <div>
+      <p>{{ greeting() }}!</p>
+      <h2>{{ oAuthService.logedUser() }}</h2>
+    </div>
+  </div>}
+  <section id="wrapper">
+    <section id="content">
+      <div id="headline">
+        <h3>Join</h3>
+        <span></span>
+        <p>Key Metrics at a Glance</p>
+        <img src="assets/icons/blue-underline.png" alt="underline" />
+      </div>
+
+      <div class="card">
+        <a [routerLink]="'/board'" class="button">
+          <div class="icon-wrapper">
+            <img class="icon-default" src="assets/icons/edit-circle-blue.png" alt="Edit" />
+            <img class="icon-hover" src="assets/icons/edit-circle-white.png" alt="Edit" />
+          </div>
+          <div class="information">
+            <span>{{ todoCount() }}</span>
+            <p>To-do</p>
+          </div>
+        </a>
+
+        <a [routerLink]="'/board'" class="button" href="">
+          <div>
+            <img class="icon-default" src="assets/icons/check-circle-blue.png" alt="Check" />
+            <img class="icon-hover" src="assets/icons/check-circle-white.png" alt="Check" />
+          </div>
+          <div class="information">
+            <span>{{ doneCount() }}</span>
+            <p>Done</p>
+          </div>
+        </a>
+      </div>
+
+      <div>
+        <a [routerLink]="'/board'" class="button-two" href="">
+          <div>
+            <div id="urgent-header">
+              <img class="urgent" src="assets/icons/urgent.png" alt="Urgent" />
+              <div class="information">
+                <span>{{ urgentCount() }}</span>
+                <p>Urgent</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="seperator"></div>
+          <div>
+            <strong>{{ upcomingDeadline() }}</strong>
+            <p>Upcoming Deadline</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="card">
+        <a [routerLink]="'/board'" class="button-three" href="">
+          <div class="information">
+            <span>{{ totalTasks() }}</span>
+            <p>Tasks in</p>
+            <p>Board</p>
+          </div>
+        </a>
+        <a [routerLink]="'/board'" class="button-three" href="">
+          <div class="information">
+            <span>{{ inProgressCount() }}</span>
+            <p>Tasks in</p>
+            <p>Progress</p>
+          </div>
+        </a>
+        <a [routerLink]="'/board'" class="button-three" href="">
+          <div class="information">
+            <span>{{ awaitingFeedbackCount() }}</span>
+            <p>Awaiting</p>
+            <p>Feedback</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <div id="greet">
+      <h4>{{ greeting() }},</h4>
+      <h2>{{ oAuthService.logedUser() }}</h2>
+    </div>
+  </section>
+</main>
