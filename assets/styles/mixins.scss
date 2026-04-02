@@ -1,0 +1,41 @@
+* {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-size: inherit;
+    color: inherit;
+    border: initial;
+    font-family: 'Inter';
+}
+
+@mixin flexi($jc: center, $fd: row, $ai: center, $gap: 0){
+    display: flex;
+    justify-content: $jc;
+    flex-direction: $fd;
+    align-items: $ai;
+    gap: $gap;
+}
+
+@mixin text-cut {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin text-cut-wrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin text-cut-multi($lines: 2) {
+  display: -webkit-box;           
+  -webkit-line-clamp: $lines;     
+  -webkit-box-orient: vertical;   
+  overflow: hidden;               
+  text-overflow: ellipsis;        
+  white-space: normal;            
+}
